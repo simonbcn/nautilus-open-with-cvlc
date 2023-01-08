@@ -26,15 +26,12 @@ class openFolderVLC(GObject.GObject, Nautilus.MenuProvider):
         self,
         files: List[Nautilus.FileInfo],
         ) -> List[Nautilus.MenuItem]:
-        if len(files) != 1:
+        if len(files) != 1 and not shutil.which("cvlc"):
             return []
 
         file = files[0]
 
         if not file.is_directory():
-            return []
-
-        if not shutil.which("cvlc"):
             return[]
         
         item = Nautilus.MenuItem(
